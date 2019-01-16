@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define SIZE 1
+#define SIZE 4
 
 struct DataItem {
     int key;
@@ -63,6 +63,11 @@ void delete(struct DataItem *item) {
     struct DataItem *cursor = hashArray[hashIndex]; // 指向当前元素
     struct DataItem *prev = cursor;   // 指向前一个元素
 
+    /*
+     * hash table 结构
+     * key1 => (k1, v1) -> (k2, v2)
+     * key2 => (k3, v3) -> (k4, v4)
+     */
     while (cursor) {
         // 1. 如果有多个元素 hash code 相同, 需要以链表的写法移除该元素
         // 2. 释放内存
@@ -85,8 +90,17 @@ void delete(struct DataItem *item) {
 
 void display() {
     for (int i = 0; i < SIZE; ++i) {
-        if (hashArray[i] != NULL)
-            printf(" (%d, %d)", hashArray[i]->key, hashArray[i]->data);
+        if (hashArray[i] != NULL) {
+            int hashKey = hashCode(hashArray[i]->key);
+            printf("hash key = %d\n\t(%d, %d)", hashKey, hashArray[i]->key, hashArray[i]->data);
+
+            struct DataItem* temp = hashArray[i]->next;
+            while (temp) {
+                printf(" -> (%d, %d)", temp->key, temp->data);
+                temp = temp->next;
+            }
+            if (i != SIZE - 1) printf("\n");
+        }
         else
             printf(" ~~ ");
     }
