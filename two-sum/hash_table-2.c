@@ -17,7 +17,7 @@ int main() {
     insert(37, 97);
 
     display();
-    struct DataItem* item = search(37);
+    struct DataItem* item = search(17);
 
     if (item != NULL) {
         printf("Element found: %d\n", item->data);
@@ -26,7 +26,7 @@ int main() {
     }
 
     delete(item);
-    item = search(74);
+    item = search(17);
 
     display();
     if (item != NULL) {

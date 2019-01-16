@@ -72,17 +72,16 @@ void delete(struct DataItem *item) {
         // 1. 如果有多个元素 hash code 相同, 需要以链表的写法移除该元素
         // 2. 释放内存
         if (cursor->key == item->key) {
-            if (prev != cursor) {  // 相同 hash key 多个值
-                prev->next = NULL;
-            } else { // 该 hash key 下只有一个值
-                hashArray[hashIndex] = NULL;
+            if (prev == cursor) {
+                // 该 hash key 上只有一个节点
+                hashArray[hashIndex] = cursor->next;
+            } else {
+                prev->next = cursor->next;
             }
-
-            prev->next = cursor->next;
-            cursor = NULL; // 这里只是指针的值为 NULL 了, 指针指向的地方并没有被置为 NULL
             free(cursor);
             break;
         }
+
         prev = cursor;
         cursor = cursor->next;
     }
