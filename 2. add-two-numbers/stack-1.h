@@ -68,7 +68,7 @@ void display(struct Stack *stack, char *name) {
 struct Stack* reverseStack(struct Stack* stack) {
     int size = 0;
 
-    // 计算 stack 长度
+    // 计算 2. add-two-numbers 长度
     struct ListNode* cursor = stack->top;
     while (cursor) {
         size++;
