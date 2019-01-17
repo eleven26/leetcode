@@ -90,67 +90,29 @@ struct ListNode* append(struct ListNode* cursor, int val) {
  * };
  */
 struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
-    struct ListNode* list = (struct ListNode*) malloc(sizeof(struct ListNode));
-    struct ListNode* cursor = list;
+    struct ListNode result = { .next = NULL }, *cursor = &result;
 
-    int l1Value = 0, l2Value = 0, sum = 0, remainder = 0;
-    while (l1 && l2) {
-        l1Value = l1->val;
-        l2Value = l2->val;
-        // 加上上一次计算的余数
-        sum = l1Value + l2Value + remainder;
+    int carry = 0, val1, val2, sum;
+    while (l1 != NULL || l2 != NULL || carry) {
+        val1 = val2 = sum = 0;
 
-        // 进位
-        if (sum >= 10) {
-            sum -= 10;
-            remainder = 1;
-        } else {
-            remainder = 0;
+        if (l1 != NULL) {
+            val1 = l1->val;
+            l1 = l1->next;
+        }
+        if (l2 != NULL) {
+            val2 = l2->val;
+            l2 = l2->next;
         }
 
-        cursor = append(cursor, sum);
-        l1 = l1->next;
-        l2 = l2->next;
+        sum = val1 + val2 + carry;
+        carry = sum > 9 ? 1 : 0;
+        cursor = cursor->next = malloc(sizeof(struct ListNode));
+        cursor->val = sum % 10;
+        cursor->next = NULL;
     }
 
-    while (l1) {
-        l1Value = l1->val;
-        sum = l1Value + remainder;
-
-        // 进位
-        if (sum >= 10) {
-            sum -= 10;
-            remainder = 1;
-        } else {
-            remainder = 0;
-        }
-
-        l1 = l1->next;
-        cursor = append(cursor, sum);
-    }
-    while (l2) {
-        l2Value = l2->val;
-        sum = l2Value + remainder;
-
-        // 进位
-        if (sum >= 10) {
-            sum -= 10;
-            remainder = 1;
-        } else {
-            remainder = 0;
-        }
-
-        l2 = l2->next;
-        cursor = append(cursor, sum);
-    }
-
-    // 余数
-    if (remainder > 0) {
-        cursor = append(cursor, remainder);
-    }
-    cursor->next = NULL;
-
-    return list->next;
+    return result.next;
 }
 
 #endif //LEETCODE_STACK_H

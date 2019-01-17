@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <time.h>
 #include "stack.h"
 
 int main() {
@@ -28,7 +29,16 @@ int main() {
     push(l2, 5);
     push(l2, 5);
 
+    __darwin_clock_t start, end;
+    double cpu_time_used;
+
+    start = clock();
+
     struct ListNode* result = addTwoNumbers(l1->top, l2->top);
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+    printf("%f\n", cpu_time_used);
     displayList(result, "result");
 
     return 0;
