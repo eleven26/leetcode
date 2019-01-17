@@ -93,7 +93,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
     struct ListNode result = { .next = NULL }, *cursor = &result;
 
     int carry = 0, val1, val2, sum;
-    while (l1 != NULL || l2 != NULL || carry) {
+    while (l1 != NULL || l2 != NULL || carry == 1) {
         val1 = val2 = sum = 0;
 
         if (l1 != NULL) {
@@ -108,7 +108,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
         sum = val1 + val2 + carry;
         carry = sum > 9 ? 1 : 0;
         cursor = cursor->next = malloc(sizeof(struct ListNode));
-        cursor->val = sum % 10;
+        cursor->val = sum > 10 ? sum - 10 : sum;
         cursor->next = NULL;
     }
 

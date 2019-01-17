@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "stack.h"
+//#include "stack-1.h"
 
 int main() {
     struct Stack* stack = createStack();
@@ -31,14 +32,14 @@ int main() {
 
     __darwin_clock_t start, end;
     double cpu_time_used;
-
     start = clock();
 
     struct ListNode* result = addTwoNumbers(l1->top, l2->top);
+
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
     printf("%f\n", cpu_time_used);
+
     displayList(result, "result");
 
     return 0;
