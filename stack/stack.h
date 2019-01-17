@@ -94,7 +94,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
 
     int carry = 0, val1, val2, sum;
     while (l1 != NULL || l2 != NULL || carry == 1) {
-        val1 = val2 = sum = 0;
+        val1 = val2 = 0;
 
         if (l1 != NULL) {
             val1 = l1->val;

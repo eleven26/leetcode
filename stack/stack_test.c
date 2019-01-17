@@ -34,13 +34,16 @@ int main() {
     double cpu_time_used;
     start = clock();
 
-    struct ListNode* result = addTwoNumbers(l1->top, l2->top);
+//    struct ListNode* result;
+    for (int i = 0; i < 300000; ++i) {
+        addTwoNumbers(l1->top, l2->top);
+    }
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     printf("%f\n", cpu_time_used);
 
-    displayList(result, "result");
+//    displayList(result, "result");
 
     return 0;
 }
