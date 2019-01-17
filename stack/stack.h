@@ -75,26 +75,11 @@ void display(struct Stack *stack, char *name) {
     displayList(cursor, name);
 }
 
-struct Stack* reverseStack(struct Stack* stack) {
-    int size = 0;
-
-    // 计算 stack 长度
-    struct ListNode* cursor = stack->top;
-    while (cursor) {
-        size++;
-        cursor = cursor->next;
-    }
-
-    int vals[size];
-    for (int i = 0; i < size; ++i) {
-        vals[i] = pop(stack);
-    }
-
-    for (int i = 0; i < size; ++i) {
-        push(stack, vals[i]);
-    }
-
-    return stack;
+struct ListNode* append(struct ListNode* cursor, int val) {
+    struct ListNode *node = (struct ListNode *) malloc(sizeof(struct ListNode));
+    node->val = val;
+    cursor->next = node;
+    return node;
 }
 
 /**
@@ -105,10 +90,8 @@ struct Stack* reverseStack(struct Stack* stack) {
  * };
  */
 struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
-    struct Stack *result = createStack();
-
-    displayList(l1, "l1");
-    displayList(l2, "l2");
+    struct ListNode* list = (struct ListNode*) malloc(sizeof(struct ListNode));
+    struct ListNode* cursor = list;
 
     int l1Value = 0, l2Value = 0, sum = 0, remainder = 0;
     while (l1 && l2) {
@@ -125,7 +108,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
             remainder = 0;
         }
 
-        push(result, sum);
+        cursor = append(cursor, sum);
         l1 = l1->next;
         l2 = l2->next;
     }
@@ -143,7 +126,7 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
         }
 
         l1 = l1->next;
-        push(result, sum);
+        cursor = append(cursor, sum);
     }
     while (l2) {
         l2Value = l2->val;
@@ -158,17 +141,16 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
         }
 
         l2 = l2->next;
-        push(result, sum);
+        cursor = append(cursor, sum);
     }
 
     // 余数
     if (remainder > 0) {
-        push(result, remainder);
+        cursor = append(cursor, remainder);
     }
+    cursor->next = NULL;
 
-    reverseStack(result);
-
-    return result->top;
+    return list->next;
 }
 
 #endif //LEETCODE_STACK_H
